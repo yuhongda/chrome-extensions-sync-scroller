@@ -14,7 +14,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 		}
 
 		const _pos = result.pos;
-		const _index = _pos.findIndex((item) => item.url === sender.tab.url);
+		const _index = _pos.findIndex((item) => item.url.split('#')[0] === sender.tab.url.split('#')[0]);
 		if (_index !== -1) {
 			_pos[_index].y = request.posY;
 		} else {
@@ -33,7 +33,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 			function (windows) {
 				windows.forEach((window) => {
 					window.tabs.forEach((tab) => {
-						const foundPos = _pos.find((item) => item.url === tab.url);
+						const foundPos = _pos.find((item) => item.url.split('#')[0] === tab.url.split('#')[0]);
 						if (foundPos) {
 							chrome.tabs.sendMessage(tab.id, { posY: foundPos.y });
 						}
