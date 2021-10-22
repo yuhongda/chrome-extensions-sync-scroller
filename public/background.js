@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 let pos = [];
 
 chrome.runtime.onInstalled.addListener(() => {
