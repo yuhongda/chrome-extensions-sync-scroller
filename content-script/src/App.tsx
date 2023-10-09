@@ -1,40 +1,32 @@
-import React, { useEffect, useState, useRef } from "react";
-import { debounce } from "lodash-es";
-import "./App.css";
-import { Button, message } from "antd";
-import { Menu, Item, useContextMenu } from "react-contexify";
-import "react-contexify/ReactContexify.css";
-
-const MENU_ID = "__translate_it__";
+import React, { useEffect, useState, useRef } from 'react'
+import { debounce } from 'lodash-es'
+import './App.css'
+import { Button, message } from 'antd'
 
 function App() {
-  const [enable, setEnable] = useState(false);
-  const [text, setText] = useState("");
-  const { show } = useContextMenu({
-    id: MENU_ID,
-  });
+  const [enable, setEnable] = useState(false)
 
   useEffect(() => {
     const handleMouseUp = debounce(function (e: MouseEvent) {
       if (!enable) {
-        return;
+        return
       }
-      const selection = window.getSelection();
+      const selection = window.getSelection()
       if (selection) {
         if (selection.toString()) {
-          setText(selection.toString());
+          setText(selection.toString())
           show({
             event: e,
-          });
+          })
         }
       }
-    }, 500);
+    }, 500)
 
-    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener('mouseup', handleMouseUp)
     return () => {
-      window.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [enable]);
+      window.removeEventListener('mouseup', handleMouseUp)
+    }
+  }, [enable])
 
   useEffect(() => {
     const handleMessage = (request: any, sender: any, sendResponse: any) => {
@@ -44,37 +36,24 @@ function App() {
             <strong>Translate it result:</strong>
             <div>{request.text}</div>
             <div>{request.result}</div>
-          </>
-        );
+          </>,
+        )
       }
-      return true;
-    };
-    chrome.runtime.onMessage.addListener(handleMessage);
+      return true
+    }
+    chrome.runtime.onMessage.addListener(handleMessage)
     return () => {
-      chrome.runtime.onMessage.removeListener(handleMessage);
-    };
-  }, []);
+      chrome.runtime.onMessage.removeListener(handleMessage)
+    }
+  }, [])
 
   useEffect(() => {
-    chrome.storage.sync.get(["enable"], async function (result: any) {
-      setEnable(result.enable);
-    });
-  }, []);
+    chrome.storage.sync.get(['enable'], async function (result: any) {
+      setEnable(result.enable)
+    })
+  }, [])
 
-  return (
-    <Menu id={MENU_ID}>
-      <Item
-        id="trans"
-        style={{ justifyContent: "center" }}
-        onClick={() => {
-          chrome.runtime.sendMessage({ text }, function (response: any) {});
-          window.getSelection()?.empty();
-        }}
-      >
-        translate it.
-      </Item>
-    </Menu>
-  );
+  return null
 }
 
-export default App;
+export default App
