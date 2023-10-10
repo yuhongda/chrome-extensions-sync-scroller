@@ -7,37 +7,43 @@ function App() {
   const [enable, setEnable] = useState(false)
 
   useEffect(() => {
-    const handleMouseUp = debounce(function (e: MouseEvent) {
+    const handleScroll = debounce(function (e: Event) {
       if (!enable) {
         return
       }
-      const selection = window.getSelection()
-      if (selection) {
-        if (selection.toString()) {
-          setText(selection.toString())
-          show({
-            event: e,
-          })
-        }
-      }
+
+      chrome.runtime.sendMessage({ posY: window.scrollY }, function () {})
     }, 500)
 
-    window.addEventListener('mouseup', handleMouseUp)
+    window.addEventListener('scroll', handleScroll)
     return () => {
-      window.removeEventListener('mouseup', handleMouseUp)
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [enable])
+
+  useEffect(() => {
+    const handleGestureEnd = debounce(function (e: any) {
+      if (!enable) {
+        return
+      }
+
+      chrome.runtime.sendMessage({ scale: e.scale }, function () {})
+    }, 500)
+
+    window.addEventListener('gestureend', handleGestureEnd)
+    return () => {
+      window.removeEventListener('gestureend', handleGestureEnd)
     }
   }, [enable])
 
   useEffect(() => {
     const handleMessage = (request: any, sender: any, sendResponse: any) => {
-      if (request.text) {
-        message.info(
-          <>
-            <strong>Translate it result:</strong>
-            <div>{request.text}</div>
-            <div>{request.result}</div>
-          </>,
-        )
+      if (request.posY) {
+        window.scrollTo({
+          top: request.posY,
+          left: 0,
+          behavior: 'smooth',
+        })
       }
       return true
     }

@@ -10,7 +10,6 @@ specifiers:
   antd: ^5.3.1
   lodash-es: ^4.17.21
   react: ^18.2.0
-  react-contexify: ^6.0.0
   react-dom: ^18.2.0
   typescript: ^4.9.3
   vite: ^4.1.0
@@ -20,7 +19,6 @@ dependencies:
   antd: 5.9.4_biqbaboplfbrettd7655fr4n2y
   lodash-es: 4.17.21
   react: 18.2.0
-  react-contexify: 6.0.0_biqbaboplfbrettd7655fr4n2y
   react-dom: 18.2.0_react@18.2.0
 
 devDependencies:
@@ -486,6 +484,9 @@ packages:
     requiresBuild: true
     peerDependencies:
       '@swc/helpers': ^0.5.0
+    peerDependenciesMeta:
+      '@swc/helpers':
+        optional: true
     dependencies:
       '@swc/counter': 0.1.2
       '@swc/types': 0.1.5
@@ -671,11 +672,6 @@ packages:
     resolution: {integrity: sha1-NR2BO/ATf8xqdqFriCCNJWCg2SQ=, tarball: classnames/download/classnames-2.3.2.tgz}
     dev: false
 
-  /clsx/1.2.1:
-    resolution: {integrity: sha1-DdxKIKVJtZyTpBFrsm9SlMoX3BI=, tarball: clsx/download/clsx-1.2.1.tgz}
-    engines: {node: '>=6'}
-    dev: false
-
   /compute-scroll-into-view/3.0.3:
     resolution: {integrity: sha1-xBiQClxW4rBLiFtUmV3xZFNZYrE=, tarball: compute-scroll-into-view/download/compute-scroll-into-view-3.0.3.tgz}
     dev: false
@@ -734,6 +730,11 @@ packages:
   /debug/4.3.4:
     resolution: {integrity: sha1-Exn2V5NX8jONMzfSzdSRS7XcyGU=, tarball: debug/download/debug-4.3.4.tgz}
     engines: {node: '>=6.0'}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
     dependencies:
       ms: 2.1.2
     dev: true
@@ -1270,6 +1271,15 @@ packages:
       moment: '>= 2.x'
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
+    peerDependenciesMeta:
+      date-fns:
+        optional: true
+      dayjs:
+        optional: true
+      luxon:
+        optional: true
+      moment:
+        optional: true
     dependencies:
       '@babel/runtime': 7.23.1
       '@rc-component/trigger': 1.17.0_biqbaboplfbrettd7655fr4n2y
@@ -1528,17 +1538,6 @@ packages:
       react-dom: 18.2.0_react@18.2.0
     dev: false
 
-  /react-contexify/6.0.0_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha1-UpWbtQfWoxIk/ocK4UfiEeNZq+E=, tarball: react-contexify/download/react-contexify-6.0.0.tgz}
-    peerDependencies:
-      react: '>=16'
-      react-dom: '>=16'
-    dependencies:
-      clsx: 1.2.1
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-    dev: false
-
   /react-dom/18.2.0_react@18.2.0:
     resolution: {integrity: sha1-IqrzhwjbJnTtmtoiTKSqcI2CHj0=, tarball: react-dom/download/react-dom-18.2.0.tgz}
     peerDependencies:
@@ -1688,6 +1687,21 @@ packages:
       stylus: '*'
       sugarss: '*'
       terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
     dependencies:
       esbuild: 0.18.20
       postcss: 8.4.31

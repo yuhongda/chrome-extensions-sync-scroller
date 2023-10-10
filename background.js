@@ -1,65 +1,47 @@
-let text = [];
-const API = "https://chatgpt-demo-s8o2.vercel.app/api/generate";
+let pos = []
 
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.set({ text, enable: false, lang: "Chinese" });
-});
+  chrome.storage.sync.set({ pos, enable: false, scale: 1 })
+})
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  chrome.storage.sync.get(["text", "enable", "lang"], async function (result) {
+  chrome.storage.sync.get(['enable', 'pos', 'scale'], async function (result) {
     if (!result.enable) {
-      // chrome.storage.sync.set({ pos: [], enable: false });
-      return;
+      return
     }
 
-    const response = await fetch(API, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        withCredentials: true,
-      },
-      body: JSON.stringify({ animal: request.text, lang: result.lang }),
-    });
-    const data = await response.json();
-
-    const _text = result.text;
-    const _index = _text.findIndex(
-      (item) => item.url.split("#")[0] === sender.tab.url.split("#")[0]
-    );
-    if (_index !== -1) {
-      _text[_index].text = request.text;
-      _text[_index].result = data.result;
-    } else {
-      _text.push({
-        url: sender.tab.url,
-        text: request.text,
-        result: data.result,
-      });
-    }
-
-    chrome.storage.sync.set({ pos: _text });
+    const _pos = result.pos
 
     chrome.windows.getAll(
       {
         populate: true,
-        windowTypes: ["normal", "panel", "popup"],
+        windowTypes: ['normal', 'panel', 'popup'],
       },
       function (windows) {
-        windows.forEach((window) => {
-          window.tabs.forEach((tab) => {
-            const foundPos = _text.find(
-              (item) => item.url.split("#")[0] === tab.url.split("#")[0]
-            );
+        windows.forEach(window => {
+          window.tabs.forEach(tab => {
+            const foundPos = _pos.find(item => item.url.split('#')[0] === tab.url.split('#')[0])
             if (foundPos) {
               chrome.tabs.sendMessage(tab.id, {
-                text: foundPos.text,
-                result: foundPos.result,
-              });
+                posY: foundPos.y * (foundPos.scale || 1),
+              })
             }
-          });
-        });
-      }
-    );
-  });
-	return true;
-});
+          })
+        })
+      },
+    )
+
+    const _index = _pos.findIndex(item => item.url.split('#')[0] === sender.tab.url.split('#')[0])
+    if (_index !== -1) {
+      _pos[_index].y = request.posY * (request.scale || 1)
+    } else {
+      _pos.push({
+        url: sender.tab.url,
+        y: request.posY * (request.scale || 1),
+      })
+    }
+
+    chrome.storage.sync.set({ pos: _pos })
+  })
+  return true
+})
