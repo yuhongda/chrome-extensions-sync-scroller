@@ -4,7 +4,7 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.sync.set({ pos, enable: false, scale: 1 })
 })
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+const updatePos = (request, sender, sendResponse) => {
   chrome.storage.sync.get(['enable', 'pos', 'scale'], async function (result) {
     if (!result.enable) {
       return
@@ -43,5 +43,18 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
     chrome.storage.sync.set({ pos: _pos })
   })
+}
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  updatePos(request, sender, sendResponse)
+  return true
+})
+
+chrome.tabs.onUpdated.addListener(function (request, sender, sendResponse) {
+  updatePos(request, sender, sendResponse)
+  return true
+})
+chrome.tabs.onHighlighted.addListener(function (request, sender, sendResponse) {
+  updatePos(request, sender, sendResponse)
   return true
 })
