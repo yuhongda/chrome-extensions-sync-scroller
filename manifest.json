@@ -10,10 +10,7 @@
   "action": {
     "default_popup": "index.html"
   },
-  "permissions": [
-    "storage",
-    "tabs"
-  ],
+  "permissions": ["storage", "tabs"],
   "icons": {
     "16": "logo.png",
     "48": "logo.png",
@@ -21,12 +18,8 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
-        "content-script.js"
-      ]
+      "matches": ["<all_urls>"],
+      "js": ["content-script/src/main.tsx"]
     }
   ]
 }
