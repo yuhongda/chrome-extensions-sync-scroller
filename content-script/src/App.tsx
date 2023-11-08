@@ -68,7 +68,6 @@ function App() {
       chrome.storage.sync.get(['pos'], async function (result: any) {
         const _pos = result.pos
         const foundPos = _pos.find((item: any) => item.url.split('#')[0] === window.location.href.split('#')[0])
-        console.log(_pos, foundPos)
         if (foundPos) {
           setTimeout(() => {
             window.scrollTo({
