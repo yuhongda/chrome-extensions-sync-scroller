@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { debounce } from 'lodash-es'
+import { debounce, set } from 'lodash-es'
 import './App.css'
 import { Button, message } from 'antd'
 
@@ -58,6 +58,34 @@ function App() {
       setEnable(result.enable)
     })
   }, [])
+
+  useEffect(() => {
+    const handleOnLoad = () => {
+      if (!enable) {
+        return
+      }
+
+      chrome.storage.sync.get(['pos'], async function (result: any) {
+        const _pos = result.pos
+        const foundPos = _pos.find((item: any) => item.url.split('#')[0] === window.location.href.split('#')[0])
+        console.log(_pos, foundPos)
+        if (foundPos) {
+          setTimeout(() => {
+            window.scrollTo({
+              top: foundPos.y * (foundPos.scale || 1),
+              left: 0,
+              behavior: 'smooth',
+            })
+          }, 1000)
+        }
+      })
+    }
+
+    window.addEventListener('load', handleOnLoad)
+    return () => {
+      window.removeEventListener('load', handleOnLoad)
+    }
+  }, [enable])
 
   return null
 }
