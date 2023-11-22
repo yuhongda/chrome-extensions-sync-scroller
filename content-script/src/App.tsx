@@ -38,7 +38,7 @@ function App() {
 
   useEffect(() => {
     const handleMessage = (request: any, sender: any, sendResponse: any) => {
-      if (request.posY) {
+      if (request.posY !== undefined) {
         window.scrollTo({
           top: request.posY,
           left: 0,

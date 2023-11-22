@@ -11,6 +11,7 @@ const updatePos = (request, sender, sendResponse) => {
     }
 
     const _pos = result.pos
+    console.log(_pos)
 
     chrome.windows.getAll(
       {
