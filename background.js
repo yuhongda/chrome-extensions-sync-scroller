@@ -1,7 +1,7 @@
 let pos = []
 
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.set({ pos, enable: false, scale: 1 })
+  chrome.storage.sync.set({ pos, enable: false })
 })
 
 const updatePos = (request, sender, sendResponse) => {
@@ -62,7 +62,6 @@ chrome.tabs.onHighlighted.addListener(function (request, sender, sendResponse) {
 })
 
 chrome.storage.onChanged.addListener((changes, areaName) => {
-  console.log(changes, areaName)
   const { pos } = changes
   if (!pos) return
   const { newValue, oldValue } = pos
