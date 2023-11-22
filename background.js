@@ -5,7 +5,7 @@ chrome.runtime.onInstalled.addListener(() => {
 })
 
 const updatePos = (request, sender, sendResponse) => {
-  chrome.storage.sync.get(['enable', 'pos', 'scale'], async function (result) {
+  chrome.storage.sync.get(['enable', 'pos'], async function (result) {
     if (!result.enable) {
       return
     }
