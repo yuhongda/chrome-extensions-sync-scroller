@@ -1,4 +1,4 @@
-# Privacy Policies for Chrome Extension sunc-scroller
+# Privacy Policies for Chrome Extension sync-scroller
 
 To sync scroller bar position on the same tab, this extension will use storage to save the scroll bar position of the page and the URL.
 
