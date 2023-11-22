@@ -25,6 +25,9 @@ devDependencies:
   '@crxjs/vite-plugin':
     specifier: 2.0.0-beta.10
     version: 2.0.0-beta.10
+  '@types/chrome':
+    specifier: ^0.0.243
+    version: 0.0.243
   '@types/lodash-es':
     specifier: ^4.17.6
     version: 4.17.9
@@ -523,6 +526,27 @@ packages:
 
   /@swc/types@0.1.5:
     resolution: {integrity: sha1-BDtzHU9Wp5tIl6PeGvNeddVrxjo=, tarball: http://registry.m.jd.com/@swc/types/download/@swc/types-0.1.5.tgz}
+    dev: true
+
+  /@types/chrome@0.0.243:
+    resolution: {integrity: sha1-pnUq8ocZW0q+DftyoXL81yhhfAY=, tarball: http://registry.m.jd.com/@types/chrome/download/@types/chrome-0.0.243.tgz}
+    dependencies:
+      '@types/filesystem': 0.0.34
+      '@types/har-format': 1.2.14
+    dev: true
+
+  /@types/filesystem@0.0.34:
+    resolution: {integrity: sha1-mw0NeRq2shdSjM6NORdktLR2B78=, tarball: http://registry.m.jd.com/@types/filesystem/download/@types/filesystem-0.0.34.tgz}
+    dependencies:
+      '@types/filewriter': 0.0.31
+    dev: true
+
+  /@types/filewriter@0.0.31:
+    resolution: {integrity: sha1-paJWZGvZggm6+aoyBzBH+E9MPz8=, tarball: http://registry.m.jd.com/@types/filewriter/download/@types/filewriter-0.0.31.tgz}
+    dev: true
+
+  /@types/har-format@1.2.14:
+    resolution: {integrity: sha1-KS5V1SvoZZyEhjFqCuQ5dgYX4KM=, tarball: http://registry.m.jd.com/@types/har-format/download/@types/har-format-1.2.14.tgz}
     dev: true
 
   /@types/lodash-es@4.17.9:
